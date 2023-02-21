@@ -4,6 +4,7 @@ const router = express.Router()
 
 const Apt = require('../../../models/appointment')
 
+
 // GET
 router.get('/:id', (req, res) => {
             Apt.findOne({

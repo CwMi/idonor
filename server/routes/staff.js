@@ -7,6 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user.js')
 const Apt = require('../models/appointment')
 const Req = require('../models/request')
+const Sell = require('../models/request')
 
 // Logout , Login
 router.get('/logout', (req, res) => {
@@ -92,14 +93,27 @@ router.get('/profile', (req, res) => {
     })
 })
 
+// Seller View
+router.get('/appointment', (req, res) => {
+    
+   Sell.find({user:{$ne:req.user.id}}).populate({path:'user', model:User, select: {password:0} }).exec().then((data)=>{
+        console.log(data)
+        res.render('staff/sell/index', {
+            title: 'View Request ',
+            data: data,
+            staff: req.user
+        })
+    })
+})
+
 // Appointment View
 router.get('/appointment', (req, res) => {
     
-    Req.find({}, (err, result) => {
-        console.log(result)
+    Req.find({user:{$ne:req.user.id}}).populate({path:'user', model:User, select: {password:0} }).exec().then((data)=>{
+        console.log(data)
         res.render('staff/appointment/index', {
             title: 'View Request ',
-            data: result,
+            data: data,
             staff: req.user
         })
     })
@@ -131,10 +145,11 @@ router.get('/appointment/:id', (req, res) => {
 
 // Manage User View
 router.get('/user', (req, res) => {
-    User.find({}, (err, result) => {
+    User.find({user:{$ne:req.user.id}}).exec().then((data)=>{
+        console.log(data)
         res.render('staff/user/index', {
             title: 'Manage User',
-            data: result,
+            data: data,
             staff: req.user
         })
     })

@@ -1,0 +1,62 @@
+<%- include('../include/_header') %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-heart"></i>  Donation  </h1>
+            <p class="mb-4">In this page, you are able to donate to other people by contacting them</p>
+
+            <!-- DataTales Example -->
+            <div class="card shadow mb-12">
+                <div class="card card-header-actions">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"><b>List of Request</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                                    style="text-align: center;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 3%;">No</th>
+                                            <th>Name</th>
+                                            <th>Area</th>
+                                            <th style="width: 15%;">Item Type</th>
+                                            <th>Description</th>
+                                            <th style="width: 12%;">Date</th>
+                                            <th style="width: 10%;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var i = 0; i < data.length; i++) { %>
+                                            <tr>
+                                                <td><%= i + 1 %></td>
+                                                <td><%= data[i].user.name %></td>
+                                                <td><%= data[i].user.city %></td>
+                                                <td><%= data[i].item %></td>
+                                                <td><%= data[i].desc %></td>
+                                                <td><%= data[i].updatedAt.toLocaleDateString('en-GB') %></td>
+                                                <td>
+                                                    <a href="/cust/donate/detail/<%= data[i].id %>" class="btn btn-primary btn-circle btn-sm">
+                                                        <span class="icon text-white">
+                                                            <i class="fa fa-arrow-right"></i>
+                                                        </span>
+                                                        </a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<%- include('../include/_footer') %>

@@ -1,0 +1,239 @@
+<%- include('../../include/_header') %>
+
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-cart-plus"></i>  Sell Items </h1>
+    <p class="mb-4">View your listings. Add, Edit or Delete your listings here</p>
+        <!-- CARD 1 -->
+        <div class="col-xl-12 col-lg-7 mt-4" style="margin: auto; ">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header text-center ">
+                    <h2>Sell Items</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Card Body -->
+                    <form id="add" method="POST" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row" >
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    Item Type:
+                                    <div class="form-group">
+                                        <input type="text" name="item" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Item..."
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-6 mb-4">
+                                    Description:
+                                    <div class="form-group">
+                                        <input type="text" name="desc" value=""
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Description..."
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    Price:
+                                    <div class="form-group">
+                                        <input type="text" name="price" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Price..."
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 mb-1">             
+                                    <div>
+                                        <h4>Meeting Location</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-xl-6 col-md-6 mb-4">             
+                                    Address *:
+                                    <div class="form-group">
+                                        <input type="text" name="address" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Address..."
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-6 mb-4">
+                                    City *:
+                                    <div class="form-group">
+                                        <input type="text" name="city" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter City..."
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 mb-1">             
+                                    <div>
+                                        <text class="font-weight-bold">Enter extra information to ease your buyer</text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-xl-3 col-md-6 mb-4 mt-2">
+                                    Latitude:
+                                    <div class="form-group">
+                                        <input type="text" name="latitude" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Latitude..."
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4 mt-2">
+                                    Longitude:
+                                    <div class="form-group">
+                                        <input type="text" name="longitude" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Longitude..."
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-6 mb-4 mt-2">
+                                    Pick Up Details:
+                                    <div class="form-group">
+                                        <input type="text" name="details" 
+                                            class="form-control form-control-user"
+                                            placeholder="Enter Details..."
+                                            >
+                                    </div>
+                                </div>
+                                <!-- <div class="card card-body preview">
+                                    <img src="" id="output" alt="Image Preview">
+                                </div>
+                                <br>
+
+                                <input type="file" name="file" id="input-files" onchange="loadFile(event)" accept="image/*"
+                                    class="form-control-file border" required />
+                                <br> -->
+                                    <div class="col">
+                                        <input type="submit" id="btnAddAppointment" class="btn btn-warning float-right" value="List Item">
+                                    </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    <!-- DataTales Example -->
+    <div class="card shadow mb-12">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8"><b>Your Listings</b></div>
+                    <div class="col-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                            style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 3%;">No</th>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th style="width: 15%;">Price</th>
+                                    <th style="width: 15%;">Listing Date</th>
+                                    <th style="width: 10%;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i = 0; i < data.length; i++) { %>
+                                    <tr>
+                                        <td><%= i + 1 %></td>
+                                        <td><%= data[i].item %></td>
+                                        <td><%= data[i].desc %></td>
+                                        <td><%= data[i].price %></td>
+                                        <td><%= data[i].updatedAt.toLocaleDateString('en-GB') %></td>
+                                        <td>
+                                            <button value="<%= data[i].id %>" class="btn btn-danger btn-circle btn-sm btn-remove-item">
+                                                <span class="icon text-white">
+                                                    <i class="fa fa-trash"></i>
+                                                </span>
+                                                </button>
+                                            <a href="/cust/buy/sell/itemDetail/<%= data[i].id %>" class="btn btn-primary btn-circle btn-sm">
+                                            <span class="icon text-white">
+                                                <i class="fa fa-arrow-right"></i>
+                                            </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<%- include('../../include/_footer') %>
+
+<script>
+
+    $('form#add').on('submit', function(event) {
+        event.preventDefault();
+    
+        $.ajax({
+            url: "/api/cust/sell",
+            method: "POST",
+            data: $('form#add').serialize(),
+            dataType: "JSON",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href='/cust/buy/sell/item'
+                }
+                else {
+                    alert(data.message)
+                }
+            }
+        })
+    })
+</script>
+
+<script>
+    $('.btn-remove-item').click(function(e){
+        $.ajax({
+            url: "/api/cust/sell/"+$(this).val(),
+            type: "DELETE",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href = '/cust/buy/sell/item'
+                }
+                else {
+                    alert(data.message)
+                }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    })
+    </script>
+
+
+<!-- Upload Picture -->
+<!-- <script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+      }
+    };
+  </script> -->

@@ -1,0 +1,75 @@
+<%- include('../include/_header') %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            
+            <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-users"></i>  <%= title %>  </h1>
+            <p class="mb-4">Add Staff, Delete Staff, Only the Administrator have the power to manage this page</p>
+            <div class="col-xl-6 col-lg-7" style="margin: auto; display:block; margin-top: 1%;">
+            <div class="card shadow mb-12 ">
+                <div class="card card-header-actions">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"><b>Admin Information</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body ">
+
+                    <form id="add" method="POST" class="staff">
+                        <div class="card-body">
+                            <div class="row" >
+                                <div class="col-xl-12 col-md-6 mb-4">
+                                    <div class="form-group">
+                                        Name:
+                                        <input type="text" name="name" class="form-control form-control-user"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        Username:
+                                        <input type="text" name="username" class="form-control form-control-user"
+                                             required>
+                                    </div>
+                                    <div class="form-group">
+                                        Password:
+                                        <input type="text" name="password"  class="form-control form-control-user"
+                                             required>
+                                    </div>
+
+                                </div>
+                                <input type="submit" id="btnConfirmAddStaff" class="btn btn-success float-right" value="Add User" style="margin: auto; display:block;">
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+$('form#add').on('submit', function(event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "/api/staff/user",
+        method: "POST",
+        data: $('form#add').serialize(),
+        dataType: "JSON",
+        success: function(data) {
+            if(data.status == "success") {
+                alert(data.message)
+                location.href='/user'
+            }
+            else {
+                alert(data.message)
+            }
+        }
+    })
+})
+</script>

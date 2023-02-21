@@ -1,0 +1,71 @@
+<%- include('../include/_header') %>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-dollar-sign"></i>  Buy Items  </h1>
+    <p class="mb-4">View all available items by other users that are available</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-12">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-8"><b>Available Items</b></div>
+                    <div class="col-4">
+                        <button class="btn btn-warning btn-icon-split btn-sm float-right">    
+                        <span class="icon text-white-50">
+                        <i class="fa fa-plus"></i>
+                        </span>
+                        <a href="buy/sell/item" class="text" style="color:White;text-decoration: none;">Sell Items</a>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
+                            style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 3%;">No</th>
+                                    <th>Seller</th>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th style="width: 15%;">Price</th>
+                                    <th style="width: 10%;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i = 0; i < data.length; i++) { %>
+                                    <tr>
+                                        <td><%= i + 1 %></td>
+                                        <td><%= data[i].user.name %></td>
+                                        <td><%= data[i].item %></td>
+                                        <td><%= data[i].desc %></td>
+                                        <td><%= data[i].price %></td>
+                                        <td>
+                                            <a href="/cust/buy/detail/<%= data[i].id %>" class="btn btn-primary btn-circle btn-sm">
+                                            <span class="icon text-white">
+                                                <i class="fa fa-arrow-right"></i>
+                                            </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+
+<%- include('../include/_footer') %>

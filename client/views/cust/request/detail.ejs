@@ -1,0 +1,132 @@
+<%- include('../include/_header') %>
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    
+    <div class="row">
+
+        <!-- CARD 1 -->
+        <div class="col-xl-7 col-lg-7 mt-4" style="margin: auto; ">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header text-center ">
+                    <h2>Edit Request</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Card Body -->
+                    <form id="update" method="PUT">
+                        <div class="card-body">
+                            <div class="row" >
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    Item Type:
+                                    <div class="form-group">
+                                        <input type="text" name="item" value="<%= data.item %>"
+                                            class="form-control form-control-user"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-9 col-md-6 mb-4">
+                                    Description:
+                                    <div class="form-group">
+                                        <input type="text" name="desc" value="<%= data.desc %>"
+                                            class="form-control form-control-user"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 mb-1">             
+                                    <div>
+                                        <h4>Meeting Location</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-xl-6 col-md-6 mb-4">             
+                                    Address *:
+                                    <div class="form-group">
+                                        <input type="text" name="address" 
+                                            class="form-control form-control-user"
+                                            value="<%= data.address %>"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-6 mb-4">
+                                    City *:
+                                    <div class="form-group">
+                                        <input type="text" name="city" 
+                                            class="form-control form-control-user"
+                                            value="<%= data.city %>"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-md-6 mb-1">             
+                                    <div>
+                                        <text class="font-weight-bold">Enter extra information to ease your donor</text>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-xl-3 col-md-6 mb-4 mt-2">
+                                    Latitude:
+                                    <div class="form-group">
+                                        <input type="text" name="latitude" 
+                                            class="form-control form-control-user"
+                                            value="<%= data.latitude %>"
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4 mt-2">
+                                    Longitude:
+                                    <div class="form-group">
+                                        <input type="text" name="longitude" 
+                                            class="form-control form-control-user"
+                                            value="<%= data.longitude %>"
+                                            >
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-md-6 mb-4 mt-2">
+                                    Pick Up Details:
+                                    <div class="form-group">
+                                        <input type="text" name="details" 
+                                            class="form-control form-control-user"
+                                            value="<%= data.details %>"
+                                            >
+                                    </div>
+                                </div>
+                                    <div class="col">
+                                        <input type="submit" id="btnAddAppointment" class="btn btn-info float-right" value="Update">
+                                    </div>
+                                    
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+    $('form#update').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: "/api/cust/request/<%= data.id %>",
+            method: "PUT",
+            data: $('form#update').serialize(),
+            dataType: "JSON",
+            success: function (data) {
+                if (data.status == "success") {
+                    alert(data.message)
+                    window.location.href = '/cust/request'
+                } else {
+                    alert(data.message)
+                }
+            }
+        })
+    })
+</script>

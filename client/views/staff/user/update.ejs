@@ -1,0 +1,84 @@
+<%- include('../include/_header') %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            
+            <div class="row">
+
+                <!-- CARD 1 -->
+                <div class="col-xl-6 col-lg-7" style="margin: auto; display:block; margin-top: 1%;">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+
+                        <div class="card-header text-center">
+                            <h2>User Details</h2>
+                        </div>
+
+                        <div class="card-body">
+
+                            <!-- Card Body -->
+                            <form id="update" method="PUT">
+                                <div class="card-body">
+                                    <div class="row" style="margin-top: 4%;">
+                                        <div class="col-xl-12 col-md-6 mb-4">
+                                            <div class="form-group">
+                                                User ID:
+                                                <input type="text" name="id" value="<%= data.id %>" class="form-control form-control-user"
+                                                     readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                Name:
+                                                <input type="hidden" name="id" value="<%= data.id %>">
+                                                <input type="text" name="name" value="<%= data.name %>" class="form-control form-control-user"
+                                                     readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                Username:
+                                                <input type="text" name="username" value="<%= data.username %>" class="form-control form-control-user"
+                                                     readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                Gender:
+                                                <input type="text" name="gender" value="<%= data.gender %>" class="form-control form-control-user"
+                                                     readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                Number Phone:
+                                                <input type="text" name="phone" value="<%= data.phone %>" class="form-control form-control-user"
+                                                     readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+    $('form#update').on('submit', function(event) {
+        event.preventDefault();
+    
+        $.ajax({
+            url: "/api/staff/user/<%= data.id %>",
+            method: "PUT",
+            data: $('form#update').serialize(),
+            dataType: "JSON",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href='/user'
+                }
+                else {
+                    alert(data.message)
+                }
+            }
+        })
+    })
+    </script>

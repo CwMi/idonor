@@ -1,0 +1,88 @@
+<%- include('../include/_header') %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            
+            <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-users"></i>  <%= title %>  </h1>
+            <p class="mb-4">Add Appointment</p>
+            <div class="card shadow mb-12">
+                <div class="card card-header-actions">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-8"><b>Appointment Information</b></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <form id="add" method="POST" class="appointment">
+                        <div class="card-body">
+                            <div class="row" style="margin-top: 4%;">
+                                <div class="col-xl-8 col-md-6 mb-4">
+                                    <div class="form-group">
+                                        <input type="text" name="patient" class="form-control form-control-user"
+                                            placeholder="Patient Username" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" name="date" class="form-control form-control-user"
+                                            placeholder="Date" required>
+                                    </div>
+                                    <div class="form-group">
+                                            <select name="slot" id="slot" class="form-control form-control-user" required>
+                                                <option value="" readonly>Slot Time</option>
+                                                <option value="1">8 AM to 9 AM</option>
+                                                <option value="2">9 AM to 10 AM</option>
+                                                <option value="3">10 AM to 11 AM</option>
+                                                <option value="4">11 AM to 12 PM</option>
+                                              </select>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="submit" id="btnAddAppointment" class="btn btn-success float-right" value="Add Appointment">
+                                    </div>
+                                </div>
+
+                            </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    </div>
+    <!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+$(document).ready(function() {
+    $('[name="date"]').change(function() {
+        var d = $(this).val();
+        console.log(d, 'change')
+    })
+});
+
+$('form#add').on('submit', function(event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "/api/staff/appointment",
+        method: "POST",
+        data: $('form#add').serialize(),
+        dataType: "JSON",
+        success: function(data) {
+            if(data.status == "success") {
+                alert(data.message)
+                location.href='/appointment'
+            }
+            else {
+                alert(data.message)
+            }
+        }
+    })
+})
+</script>

@@ -1,0 +1,82 @@
+<%- include('../include/_header') %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            
+            <div class="row">
+
+                <!-- CARD 1 -->
+                <div class="col-xl-6 col-lg-7" style="margin: auto; display:block; margin-top: 1%;">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+
+                        <div class="card-header text-center">
+                            <h2>My Profile</h2>
+                        </div>
+
+                        <div class="card-body">
+
+                            <!-- Card Body -->
+                            <form id="update" method="PUT">
+                                <div class="card-body">
+                                    <div class="row" style="margin-top: 4%;">
+                                        <div class="col-xl-12 col-md-6 mb-4">
+                                            Name:
+                                            <div class="form-group">
+                                                <input  type="text" name="name" value="<%= staff.name %>" class="form-control form-control-user"
+                                                    placeholder="Name..." required>
+                                            </div>
+                                            Username:
+                                            <div class="form-group">
+                                                <input type="text" name="username" value="<%= staff.username %>" class="form-control form-control-user"
+                                                    placeholder="Username..." required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-1 col-md-6">
+                                            <div>
+                                                <button type="submit" data-toggle="modal"
+                                                    data-target="#UpdateStaff"
+                                                    class="btn btn-circle btn-info"><span>
+                                                        <i class="fa fa-pen"> </i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+    $('form#update').on('submit', function(event) {
+        event.preventDefault();
+    
+        $.ajax({
+            url: "/api/staff/user/<%= staff.id %>",
+            method: "PUT",
+            data: $('form#update').serialize(),
+            dataType: "JSON",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href='/user'
+                }
+                else {
+                    alert(data.message)
+                }
+            }
+        })
+    })
+    </script>

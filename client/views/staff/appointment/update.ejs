@@ -1,0 +1,146 @@
+<%- include('../include/_header') %>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- CARD 1 -->
+        <div class="col-xl-6 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header text-center">
+                    <h2>Request Details</h2>
+                </div>
+
+                <div class="card-body ">
+                    <!-- Card Body -->
+                    <form id="update" method="PUT" class="appointment">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-8 mb-4">
+                                    <div class="form-group">
+                                        <label for="id">NAME</label>
+                                        <input type="hidden" name="id" value="<%= data.id %>">
+                                        <input type="text" name="patient" class="form-control form-control-user"
+                                            placeholder="Patient Username" value="<%= data.patient %>" required
+                                            readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id">DATE</label>
+                                        <input type="hidden" name="id" value="<%= data.id %>">
+                                        <input type="text" name="patient" class="form-control form-control-user"
+                                            placeholder="Patient Username" value="<%= data.patient %>" required
+                                            readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id">ITEM REQUESTED</label>
+                                        <input type="hidden" name="id" value="<%= data.id %>">
+                                        <input type="text" name="patient" class="form-control form-control-user"
+                                            placeholder="Patient Username" value="<%= data.patient %>" required
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 1 -->
+        <div class="col-xl-6 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header text-center">
+                    <h2>Request Details</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Card Body -->
+                    <form id="update" method="PUT" class="appointment">
+                        <div class="card-body">
+                            <div class="row" style="margin-top: 4%;">
+                                <div class="col-xl-8 col-md-6 mb-4">
+                                    <div class="form-group">
+                                        <input type="hidden" name="id" value="<%= data.id %>">
+                                        <input type="text" name="patient" class="form-control form-control-user"
+                                            placeholder="Patient Username" value="<%= data.patient %>" required
+                                            readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <% 
+                                                var tD = new Date(data.date);
+                                                var cM = String(tD.getMonth()+1).padStart(2, '0');
+                                                var cD = String(tD.getDate()).padStart(2, '0');
+                                                var cY = tD.getFullYear();
+                                                var nD = cY + '-' + cM + '-' + cD;
+                                                %>
+                                        <input type="date" name="date" value="<%= nD %>"
+                                            class="form-control form-control-user" placeholder="" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="slot" id="slot" class="form-control form-control-user" required>
+                                            <option value="" readonly>Slot Time</option>
+                                            <option value="1" <% if(data.slot=="1") { %> selected <% } %>>8 AM to 9 AM
+                                            </option>
+                                            <option value="2" <% if(data.slot=="2") { %> selected <% } %>>9 AM to 10 AM
+                                            </option>
+                                            <option value="3" <% if(data.slot=="3") { %> selected <% } %>>10 AM to 11 AM
+                                            </option>
+                                            <option value="4" <% if(data.slot=="4") { %> selected <% } %>>11 AM to 12 PM
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="status" id="status" class="form-control form-control-user"
+                                            required>
+                                            <option value="<%= data.status %>" readonly><%= data.status %></option>
+                                            <option value="pending" readonly>pending</option>
+                                            <option value="accepted" readonly>accepted</option>
+                                            <option value="rejected" readonly>rejected</option>
+                                        </select>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="submit" id="btnUpdateAppointment"
+                                            class="btn btn-success float-right" value="Update Appointment">
+                                    </div>
+                                </div>
+
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+</div>
+</div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+<%- include('../include/_footer') %>
+
+<script>
+    $('form#update').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: "/api/staff/appointment/<%= data.id %>",
+            method: "PUT",
+            data: $('form#update').serialize(),
+            dataType: "JSON",
+            success: function (data) {
+                if (data.status == "success") {
+                    alert(data.message)
+                    location.href = '/appointment'
+                } else {
+                    alert(data.message)
+                }
+            }
+        })
+    })
+</script>

@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user.js')
 const Apt = require('../models/appointment')
 const Req = require('../models/request')
-const Sell = require('../models/request')
+const Sell = require('../models/sell')
 
 // Logout , Login
 router.get('/logout', (req, res) => {
@@ -94,7 +94,7 @@ router.get('/profile', (req, res) => {
 })
 
 // Seller View
-router.get('/appointment', (req, res) => {
+router.get('/sell', (req, res) => {
     
    Sell.find({user:{$ne:req.user.id}}).populate({path:'user', model:User, select: {password:0} }).exec().then((data)=>{
         console.log(data)
@@ -145,8 +145,8 @@ router.get('/appointment/:id', (req, res) => {
 
 // Manage User View
 router.get('/user', (req, res) => {
-    User.find({user:{$ne:req.user.id}}).exec().then((data)=>{
-        console.log(data)
+    User.find({_id:{$ne:req.user._id}}).then((data)=>{
+        console.log(req.user._id)
         res.render('staff/user/index', {
             title: 'Manage User',
             data: data,

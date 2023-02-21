@@ -3,8 +3,8 @@
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-users"></i>  View Request  </h1>
-            <p class="mb-4">View all request that have been made by users</p>
+            <h1 class="h3 mb-2 text-gray-800"><i class="fa fa-users"></i>  View Selling  </h1>
+            <p class="mb-4">View all listing items that have been created by users</p>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-12">
@@ -20,13 +20,13 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="text-align: center;">
                             <thead>
                                 <tr>
-                                    <th style="width: 3%;">No</th>
+                                    <th style="width: 2%;">No</th>
                                     <th>Seller Name</th>
                                     <th style="width: 15%;">Item Type</th>
                                     <th>Description </th>
                                     <!-- <th>ID</th> -->
                                     <th style="width: 20%;">Date Created</th>
-                                    <th style="width: 3%;">Actions</th>
+                                    <th style="width: 2%;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,11 +38,11 @@
                                     <td><%= data[i].desc %></td>
                                     <td><%= data[i].createdAt %></td>
                                     <td>
-                                        <a href="/appointment/update<%= data[i].id %>" class="btn btn-primary btn-circle btn-sm">
-                                        <span class="icon text-white">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </span>
-                                        </a>
+                                        <button value="<%= data[i].id %>" class="btn btn-danger btn-circle btn-sm btn-remove-item">
+                                            <span class="icon text-white">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                            </button>
                                     </td>
                                 </tr>
 
@@ -59,3 +59,24 @@
     </div>
     <!-- End of Main Content -->
 <%- include('../include/_footer') %>
+
+<script>
+    $('.btn-remove-item').click(function(e){
+        $.ajax({
+            url: "/api/cust/sell/"+$(this).val(),
+            type: "DELETE",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href = '/sell'
+                }
+                else {
+                    alert(data.message)
+                }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    })
+    </script>

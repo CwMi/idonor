@@ -38,11 +38,11 @@
                                     <td><%= data[i].desc %></td>
                                     <td><%= data[i].createdAt %></td>
                                     <td>
-                                        <a href="/appointment/update<%= data[i].id %>" class="btn btn-primary btn-circle btn-sm">
-                                        <span class="icon text-white">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </span>
-                                        </a>
+                                        <button value="<%= data[i].id %>" class="btn btn-danger btn-circle btn-sm btn-remove-request">
+                                            <span class="icon text-white">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -59,3 +59,23 @@
     </div>
     <!-- End of Main Content -->
 <%- include('../include/_footer') %>
+<script>
+    $('.btn-remove-request').click(function(e){
+        $.ajax({
+            url: "/api/cust/request/"+$(this).val(),
+            type: "DELETE",
+            success: function(data) {
+                if(data.status == "success") {
+                    alert(data.message)
+                    location.href = '/appointment'
+                }
+                else {
+                    alert(data.message)
+                }
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    })
+    </script>
